@@ -1,6 +1,5 @@
 package com.example.players;
 
-import com.example.players.controller.PlayerController;
 import com.example.players.model.Player;
 import com.example.players.repository.PlayerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
