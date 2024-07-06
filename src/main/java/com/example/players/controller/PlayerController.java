@@ -18,14 +18,14 @@ public class PlayerController {
 	@Autowired
 	private PlayerService playerService;
 	
-	@GetMapping("/players")
+	@GetMapping("/api/players")
 	public ResponseEntity<List<Player>> getAllPlayers(){
 		return ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_JSON)
 				.body(playerService.getAllPlayers());
 	}
 	
-	@GetMapping("/players/{id}")
+	@GetMapping("/api/players/{id}")
 	public ResponseEntity<Player> getPlayerById(@PathVariable String id){
 		return ResponseEntity.ok()
 				.contentType(MediaType.APPLICATION_JSON)

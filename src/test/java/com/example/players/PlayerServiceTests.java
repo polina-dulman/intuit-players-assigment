@@ -33,8 +33,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class PlayerServiceTests {
     @Autowired
     private MockMvc mockMvc;
-    @Autowired
-    private PlayerController playerController;
 
     @MockBean
     private PlayerRepository playerRepository;
@@ -47,7 +45,7 @@ public class PlayerServiceTests {
 
         when(playerRepository.findById(playerId)).thenReturn(Optional.of(mockPlayer));
 
-        ResultActions result = mockMvc.perform(get("/players/{id}", playerId));
+        ResultActions result = mockMvc.perform(get("/api/players/{id}", playerId));
 
         result.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -63,7 +61,7 @@ public class PlayerServiceTests {
 
         when(playerRepository.findById(playerId)).thenReturn(Optional.of(mockPlayer));
 
-        ResultActions result = mockMvc.perform(get("/players/{id}", playerId));
+        ResultActions result = mockMvc.perform(get("/api/players/{id}", playerId));
 
         result.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -79,7 +77,7 @@ public class PlayerServiceTests {
 
         when(playerRepository.findById(playerId)).thenReturn(Optional.of(mockPlayer));
 
-        ResultActions result = mockMvc.perform(get("/players/{id}", playerId));
+        ResultActions result = mockMvc.perform(get("/api/players/{id}", playerId));
 
         result.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
@@ -89,7 +87,7 @@ public class PlayerServiceTests {
 
     @Test
     public void testGetPlayerByIdNotFound() throws Exception {
-        ResultActions result = mockMvc.perform(get("/players/{id}", "1"));
+        ResultActions result = mockMvc.perform(get("/api/players/{id}", "1"));
         result.andExpect(status().isNotFound());
     }
 
@@ -100,19 +98,20 @@ public class PlayerServiceTests {
 
         when(playerRepository.findAll()).thenReturn(mockPlayers);
 
-        ResultActions result = mockMvc.perform(get("/players"));
+        ResultActions result = mockMvc.perform(get("/api/players"));
 
         result.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
 
-        List<Player> actual = Arrays.stream(new ObjectMapper().readValue(result.andReturn().getResponse().getContentAsString(), Player[].class)).collect(Collectors.toList());
-        actual.sort(Comparator.comparing(Player::getPlayerId));
+        List<Player> actual = Arrays.stream(new ObjectMapper().readValue(result.andReturn().getResponse().getContentAsString(), Player[].class))
+                .sorted(Comparator.comparing(Player::getPlayerId))
+                .collect(Collectors.toList());
         assertEquals(mockPlayers, actual);
     }
 
 
     @Test
     public void testGetAllPlayersEmpty() throws Exception {
-        ResultActions result = mockMvc.perform(get("/players"));
+        ResultActions result = mockMvc.perform(get("/api/players"));
 
         result.andExpect(status().isOk()).andExpect(content().contentType(MediaType.APPLICATION_JSON));
 

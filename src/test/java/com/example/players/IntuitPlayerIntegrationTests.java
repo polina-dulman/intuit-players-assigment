@@ -35,7 +35,7 @@ public class IntuitPlayerIntegrationTests {
     public void getPlayerByIdTest() throws Exception {
         repository.save(createPlayer("1", "Bob"));
         repository.flush();
-        mvc.perform(get("/players/1")
+        mvc.perform(get("/api/players/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
@@ -46,7 +46,7 @@ public class IntuitPlayerIntegrationTests {
     }
     @Test
     public void getPlayerByIdNotFound() throws Exception {
-        mvc.perform(get("/players/1")
+        mvc.perform(get("/api/players/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
@@ -60,7 +60,7 @@ public class IntuitPlayerIntegrationTests {
         ));
         repository.flush();
 
-        mvc.perform(get("/players")
+        mvc.perform(get("/api/players")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content()
